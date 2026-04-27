@@ -1,0 +1,68 @@
+[
+  {
+    "date": "2026-04-25 19:50",
+    "nom": "Jean Dupont",
+    "genre": "Homme",
+    "filiere": "Informatique",
+    "plat": "Riz sauce arachide",
+    "budget": 1500.0,
+    "satisfaction": 5,
+    "frequence": "Tous les jours",
+    "suggestion": ""
+  },
+  {
+    "date": "2026-04-25 19:51",
+    "nom": "Marie Curie",
+    "genre": "Femme",
+    "filiere": "Mathématiques",
+    "plat": "Ndole",
+    "budget": 1000.0,
+    "satisfaction": 4,
+    "frequence": "Souvent",
+    "suggestion": ""
+  },
+  {
+    "date": "2026-04-25 19:52",
+    "nom": "Isaac Newton",
+    "genre": "Homme",
+    "filiere": "Physique",
+    "plat": "Poulet DG",
+    "budget": 2000.0,
+    "satisfaction": 3,
+    "frequence": "Rarement",
+    "suggestion": ""
+  },
+  {
+    "date": "2026-04-25 19:53",
+    "nom": "Albert Einstein",
+    "genre": "Homme",
+    "filiere": "Biologie",
+    "plat": "Eru",
+    "budget": 500.0,
+    "satisfaction": 2,
+    "frequence": "Jamais",
+    "suggestion": ""
+  },
+  {
+    "date": "2026-04-25 19:54",
+    "nom": "Ada Lovelace",
+    "genre": "Femme",
+    "filiere": "Chimie",
+    "plat": "Autres",
+    "budget": 1200.0,
+    "satisfaction": 5,
+    "frequence": "Tous les jours",
+    "suggestion": "Ameliorer la rapidite du service."
+  },
+  {
+    "date": "2026-04-25 20:16",
+    "nom": "maueice ana",
+    "genre": "Femme",
+    "filiere": "Mathématiques",
+    "plat": "Okok",
+    "budget": 1000.0,
+    "satisfaction": 3,
+    "frequence": "Souvent",
+    "suggestion": "soigner le visuel"
+  }
+]

@@ -1,0 +1,15 @@
+# Environnement virtuel
+venv/
+env/
+
+# Fichiers Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Fichiers de données (optionnel, mais recommandé pour éviter de push les données privées)
+# donnees.json
+
+# Fichiers OS
+.DS_Store

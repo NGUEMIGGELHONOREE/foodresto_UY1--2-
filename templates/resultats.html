@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %}Statistiques - FoodResto UY1{% endblock %}
+
+{% block content %}
+<div class="text-center mb-4">
+    <h1>Tableau de Bord</h1>
+    <p style="color: var(--text-muted)">Analyse descriptive des données collectées ({{ nb_entrees }} participations).</p>
+</div>
+
+{% if erreur %}
+<div class="alert alert-warning" style="background: rgba(245, 158, 11, 0.1); border: 1px solid var(--warning); color: var(--warning); justify-content: center;">
+    {{ erreur }}
+</div>
+{% else %}
+
+<div class="grid-4 mb-4">
+    <div class="card" style="text-align: center; padding: 1.5rem;">
+        <div style="font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase;">Budget Moyen</div>
+        <div style="font-size: 2rem; font-weight: 700; color: var(--accent-primary);">{{ budget_moyen }} F</div>
+    </div>
+    <div class="card" style="text-align: center; padding: 1.5rem;">
+        <div style="font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase;">Satisfaction Moy.</div>
+        <div style="font-size: 2rem; font-weight: 700; color: var(--success);">{{ satisfaction_moy }}/5</div>
+    </div>
+    <div class="card" style="text-align: center; padding: 1.5rem;">
+        <div style="font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase;">Plat Populaire</div>
+        <div style="font-size: 1.5rem; font-weight: 700; color: var(--warning); margin-top: 0.5rem;">{{ plat_populaire }}</div>
+    </div>
+    <div class="card" style="text-align: center; padding: 1.5rem;">
+        <div style="font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase;">Filière Majoritaire</div>
+        <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent-secondary); margin-top: 0.5rem;">{{ filiere_top }}</div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>Statistiques Détaillées (Budget & Satisfaction)</h2>
+    <div class="table-container mt-4" style="background: var(--bg-primary); border-radius: 8px; padding: 1rem;">
+        {{ stats_html | safe }}
+    </div>
+</div>
+
+<div class="grid-2">
+    <div class="card">
+        <h3 class="mb-4 text-center">Distribution du Budget</h3>
+        <img src="data:image/png;base64,{{ hist_budget }}" alt="Histogramme Budget" style="width: 100%; border-radius: 8px;">
+    </div>
+    <div class="card">
+        <h3 class="mb-4 text-center">Distribution de la Satisfaction</h3>
+        <img src="data:image/png;base64,{{ hist_satisfaction }}" alt="Histogramme Satisfaction" style="width: 100%; border-radius: 8px;">
+    </div>
+</div>
+
+<div class="grid-2">
+    <div class="card">
+        <h3 class="mb-4 text-center">Plats Préférés</h3>
+        <img src="data:image/png;base64,{{ cam_plat }}" alt="Camembert Plats" style="width: 100%; border-radius: 8px;">
+    </div>
+    <div class="card">
+        <h3 class="mb-4 text-center">Répartition par Genre</h3>
+        <img src="data:image/png;base64,{{ cam_genre }}" alt="Camembert Genre" style="width: 100%; border-radius: 8px;">
+    </div>
+    <div class="card">
+        <h3 class="mb-4 text-center">Répartition par Filière</h3>
+        <img src="data:image/png;base64,{{ cam_filiere }}" alt="Camembert Filière" style="width: 100%; border-radius: 8px;">
+    </div>
+    <div class="card">
+        <h3 class="mb-4 text-center">Fréquence de Visite</h3>
+        <img src="data:image/png;base64,{{ cam_frequence }}" alt="Camembert Fréquence" style="width: 100%; border-radius: 8px;">
+    </div>
+</div>
+
+{% endif %}
+{% endblock %}

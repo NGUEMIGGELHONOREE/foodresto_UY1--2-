@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}FoodResto UY1{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <header>
+        <div class="container header-inner">
+            <a href="{{ url_for('index') }}" class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#grad1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <defs>
+                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#38bdf8;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#818cf8;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+                FoodResto UY1
+            </a>
+            <nav>
+                <a href="{{ url_for('index') }}" class="{{ 'active' if request.endpoint == 'index' else '' }}">Formulaire</a>
+                <a href="{{ url_for('resultats') }}" class="{{ 'active' if request.endpoint == 'resultats' else '' }}">Statistiques</a>
+                <a href="{{ url_for('voir_donnees') }}" class="{{ 'active' if request.endpoint == 'voir_donnees' else '' }}">Données brutes</a>
+                <a href="{{ url_for('machine_learning') }}" class="{{ 'active' if request.endpoint == 'machine_learning' else '' }}">Machine Learning</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 - FoodResto UY1 | Projet de Science des Données</p>
+        </div>
+    </footer>
+</body>
+</html>

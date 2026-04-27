@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}Données Brutes - FoodResto UY1{% endblock %}
+
+{% block content %}
+<div class="text-center mb-4">
+    <h1>Données Collectées</h1>
+    <p style="color: var(--text-muted)">Visualisation des {{ nb_entrees }} participations enregistrées.</p>
+</div>
+
+{% if nb_entrees == 0 %}
+<div class="alert alert-warning" style="background: rgba(245, 158, 11, 0.1); border: 1px solid var(--warning); color: var(--warning); justify-content: center;">
+    Aucune donnée n'a encore été collectée.
+</div>
+{% else %}
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2>Détails des sondages</h2>
+        <form action="/supprimer" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir tout supprimer ? Cette action est irréversible.');">
+            <button type="submit" class="btn btn-danger">Tout supprimer</button>
+        </form>
+    </div>
+    
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Nom</th>
+                    <th>Genre</th>
+                    <th>Filière</th>
+                    <th>Plat</th>
+                    <th>Budget</th>
+                    <th>Sat.</th>
+                    <th>Fréquence</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in donnees %}
+                <tr>
+                    <td style="color: var(--text-muted); font-size: 0.9rem;">{{ d.date }}</td>
+                    <td><strong>{{ d.nom }}</strong></td>
+                    <td>{{ d.genre }}</td>
+                    <td>{{ d.filiere }}</td>
+                    <td>{{ d.plat }}</td>
+                    <td style="color: var(--accent-primary); font-weight: 500;">{{ d.budget }} F</td>
+                    <td>{{ d.satisfaction }}/5</td>
+                    <td>{{ d.frequence }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

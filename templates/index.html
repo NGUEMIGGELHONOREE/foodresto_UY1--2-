@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block title %}Collecte de Données - FoodResto UY1{% endblock %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 0 auto;">
+    <div class="text-center mb-4">
+        <h1>Votre Avis Compte</h1>
+        <p style="color: var(--text-muted)">Participez à notre étude sur les habitudes alimentaires au Resto UY1.</p>
+    </div>
+
+    {% if message %}
+    <div class="alert alert-success">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        {{ message }}
+    </div>
+    {% endif %}
+
+    {% if erreur %}
+    <div class="alert alert-error">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        {{ erreur }}
+    </div>
+    {% endif %}
+
+    <div class="card">
+        <form method="POST" action="/">
+            <div class="form-group">
+                <label class="form-label">Nom complet</label>
+                <input type="text" name="nom" class="form-control" required placeholder="Ex: Jean Dupont">
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label class="form-label">Genre</label>
+                    <select name="genre" class="form-control" required>
+                        <option value="">Sélectionnez...</option>
+                        <option value="Homme">Homme</option>
+                        <option value="Femme">Femme</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Filière</label>
+                    <select name="filiere" class="form-control" required>
+                        <option value="">Sélectionnez...</option>
+                        <option value="Informatique">Informatique</option>
+                        <option value="Biologie">Biologie</option>
+                        <option value="Mathématiques">Mathématiques</option>
+                        <option value="Physique">Physique</option>
+                        <option value="Chimie">Chimie</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Plat préféré au Resto U</label>
+                <select name="plat" class="form-control" required>
+                    <option value="">Sélectionnez...</option>
+                    <option value="Riz sauce arachide">Riz sauce arachide</option>
+                    <option value="Ndole">Ndole</option>
+                    <option value="Poulet DG">Poulet DG</option>
+                    <option value="Eru">Eru</option>
+                    <option value="Okok">Okok</option>
+                    <option value="Djombo">Djombo</option>
+                    <option value="Mbinzoungou">Mbinzoungou</option>
+                    <option value="Autres">Autres</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Budget journalier estimé (FCFA)</label>
+                <input type="number" name="budget" class="form-control" min="100" max="10000" step="100" required placeholder="Ex: 1500">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Satisfaction générale (1 à 5)</label>
+                <input type="range" name="satisfaction" min="1" max="5" value="3" oninput="document.getElementById('sat-val').textContent = this.value">
+                <div class="text-center mt-4" style="font-size: 1.2rem; font-weight: bold; color: var(--accent-primary);" id="sat-val">3</div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Fréquence de visite</label>
+                <select name="frequence" class="form-control" required>
+                    <option value="">Sélectionnez...</option>
+                    <option value="Tous les jours">Tous les jours</option>
+                    <option value="Souvent">Souvent (2-3 fois/semaine)</option>
+                    <option value="Rarement">Rarement (1 fois/semaine)</option>
+                    <option value="Jamais">Jamais</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Suggestion (Optionnelle)</label>
+                <textarea name="suggestion" class="form-control" rows="3" placeholder="Avez-vous des idées d'amélioration ?"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-4" style="width: 100%;">Enregistrer ma réponse</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

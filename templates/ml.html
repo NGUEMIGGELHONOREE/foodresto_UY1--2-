@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Machine Learning - FoodResto UY1{% endblock %}
+
+{% block content %}
+<div class="text-center mb-4">
+    <h1>Analyses Prédictives</h1>
+    <p style="color: var(--text-muted)">Modélisation et complexité algorithmique.</p>
+</div>
+
+{% if erreur %}
+<div class="alert alert-error" style="justify-content: center;">
+    {{ erreur }}
+</div>
+{% else %}
+    
+<div class="card">
+    <div style="border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 25px;">
+        <h2 style="font-size: 1.5rem; margin: 0;">1. Statistiques Descriptives</h2>
+        <span style="color: var(--text-muted)">Plats préférés et répartition des étudiants par filière</span>
+    </div>
+    {% if bar_plat and pie_filiere %}
+    <div class="grid-2 mb-4">
+        <div style="text-align: center; background: white; border-radius: 12px; padding: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+            <img src="data:image/png;base64,{{ bar_plat }}" alt="Plats préférés" style="max-width: 100%; height: auto; border-radius: 8px;">
+        </div>
+        <div style="text-align: center; background: white; border-radius: 12px; padding: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+            <img src="data:image/png;base64,{{ pie_filiere }}" alt="Filières" style="max-width: 100%; height: auto; border-radius: 8px;">
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<div class="card">
+    <div style="border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 25px;">
+        <h2 style="font-size: 1.5rem; margin: 0;">2. Classification (Random Forest)</h2>
+        <span style="color: var(--text-muted)">Prédiction de la Fréquence de visite selon le profil (Budget, Satisfaction, Genre, Filière)</span>
+    </div>
+    {% if clf_results %}
+    <div class="grid-2 mb-4">
+        <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border-color);">
+            <div style="color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase;">Précision (Accuracy)</div>
+            <div style="font-size: 2rem; font-weight: 700; color: var(--accent-primary); margin: 10px 0;">{{ clf_results.accuracy }}%</div>
+        </div>
+        <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border-color);">
+            <div style="color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase;">Complexité (Temps d'exécution)</div>
+            <div style="font-size: 2rem; font-weight: 700; color: var(--success); margin: 10px 0;">{{ clf_results.time_ms }} ms</div>
+        </div>
+    </div>
+    <div style="text-align: center; background: white; border-radius: 12px; padding: 15px;">
+        <img src="data:image/png;base64,{{ clf_results.plot }}" alt="Matrice de confusion" style="max-width: 100%; height: auto; border-radius: 8px;">
+    </div>
+    {% endif %}
+</div>
+
+<div class="card">
+    <div style="border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 25px;">
+        <h2 style="font-size: 1.5rem; margin: 0;">3. Analyse des Corrélations</h2>
+        <span style="color: var(--text-muted)">Relations linéaires globales entre les variables numériques</span>
+    </div>
+    {% if corr_plot %}
+    <div style="text-align: center; background: white; border-radius: 12px; padding: 15px;">
+        <img src="data:image/png;base64,{{ corr_plot }}" alt="Matrice de corrélation" style="max-width: 100%; height: auto; border-radius: 8px;">
+    </div>
+    {% endif %}
+</div>
+
+{% endif %}
+{% endblock %}
