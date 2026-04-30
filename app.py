@@ -5,7 +5,7 @@
 #               culinaires des étudiants - UY1
 # ================================================
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 import pandas as pd
 import matplotlib
 matplotlib.use('Agg')
@@ -15,6 +15,7 @@ from datetime import datetime
 import ml_utils
 
 app = Flask(__name__)
+app.secret_key = 'foodresto_secret_key_2026'
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FICHIER_DONNEES = os.path.join(BASE_DIR, "donnees.json")
@@ -112,19 +113,37 @@ def index():
                 erreur = "⚠️ La satisfaction doit être entre 1 et 5."
             else:
                 donnees = charger_donnees()
-                donnees.append({
-                    "date"        : datetime.now().strftime("%Y-%m-%d %H:%M"),
-                    "nom"         : nom,
-                    "genre"       : genre,
-                    "filiere"     : filiere,
-                    "plat"        : plat,
-                    "budget"      : budget,
-                    "satisfaction": satisfaction,
-                    "frequence"   : frequence,
-                    "suggestion"  : suggestion
-                })
-                sauvegarder_donnees(donnees)
-                message = f"✅ Merci {nom} ! Votre réponse a été enregistrée avec succès."
+
+                # Vérification des doublons (toutes les données identiques)
+                doublon = False
+                for d in donnees:
+                    if (d.get("nom", "").strip().lower() == nom.lower() and
+                        d.get("genre", "").strip().lower() == genre.lower() and
+                        d.get("filiere", "").strip().lower() == filiere.lower() and
+                        d.get("plat", "").strip().lower() == plat.lower() and
+                        d.get("budget") == budget and
+                        d.get("satisfaction") == satisfaction and
+                        d.get("frequence", "").strip().lower() == frequence.lower() and
+                        d.get("suggestion", "").strip().lower() == suggestion.lower()):
+                        doublon = True
+                        break
+
+                if doublon:
+                    erreur = "⚠️ Cette réponse existe déjà. Vous ne pouvez pas soumettre deux fois les mêmes données."
+                else:
+                    donnees.append({
+                        "date"        : datetime.now().strftime("%Y-%m-%d %H:%M"),
+                        "nom"         : nom,
+                        "genre"       : genre,
+                        "filiere"     : filiere,
+                        "plat"        : plat,
+                        "budget"      : budget,
+                        "satisfaction": satisfaction,
+                        "frequence"   : frequence,
+                        "suggestion"  : suggestion
+                    })
+                    sauvegarder_donnees(donnees)
+                    message = f"✅ Merci {nom} ! Votre réponse a été enregistrée avec succès."
 
         except ValueError:
             erreur = "⚠️ Veuillez entrer des valeurs valides pour le budget."
@@ -182,14 +201,21 @@ def resultats():
 @app.route("/donnees")
 def voir_donnees():
     donnees = charger_donnees()
-    return render_template("donnees.html", donnees=donnees, nb_entrees=len(donnees))
+    erreur_suppression = session.pop('erreur_suppression', None)
+    return render_template("donnees.html", donnees=donnees, nb_entrees=len(donnees), erreur_suppression=erreur_suppression)
 
+
+CODE_SECRET = "1234"
 
 @app.route("/supprimer", methods=["POST"])
 def supprimer_donnees():
+    code_saisi = request.form.get("code_secret", "").strip()
+    if code_saisi != CODE_SECRET:
+        session['erreur_suppression'] = "❌ Code secret incorrect. Suppression refusée."
+        return redirect(url_for('voir_donnees'))
     if os.path.exists(FICHIER_DONNEES):
         os.remove(FICHIER_DONNEES)
-    return redirect(url_for('index'))
+    return redirect(url_for('voir_donnees'))
 
 @app.route("/machine-learning")
 def machine_learning():

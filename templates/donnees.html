@@ -12,10 +12,19 @@
     Aucune donnée n'a encore été collectée.
 </div>
 {% else %}
+
+{% if erreur_suppression %}
+<div class="alert alert-warning" style="background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; color: #ef4444; justify-content: center; margin-bottom: 20px;">
+    {{ erreur_suppression }}
+</div>
+{% endif %}
+
 <div class="card">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
         <h2>Détails des sondages</h2>
-        <form action="/supprimer" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir tout supprimer ? Cette action est irréversible.');">
+        <form action="/supprimer" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir tout supprimer ? Cette action est irréversible.');" style="display: flex; align-items: center; gap: 8px;">
+            <input type="password" name="code_secret" placeholder="Code secret" required
+                   style="padding: 8px 12px; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; background: var(--bg-card); color: var(--text-primary); width: 120px; font-size: 0.9rem;">
             <button type="submit" class="btn btn-danger">Tout supprimer</button>
         </form>
     </div>
